@@ -1,0 +1,35 @@
+image: tiangolo/docker-with-compose
+
+include:
+  - project: "templates/ci-cd"
+    file: "install.yml"
+
+stages:
+  - lint
+  - build-to-dev
+  - deploy-to-dev
+  - build-to-cert
+  - deploy-to-cert
+  - build-to-prod
+  - deploy-to-prod
+
+variables:
+  PORTDOCKER: 3000
+  PORTSALIDA: 3001
+  SKIP_LINT: true
+
+deploy-to-dev:
+  stage: deploy-to-dev
+  variables:
+    APP: auction
+    DOMINIO: landing.dev.deocasion.pe
+deploy-to-cert:
+  stage: deploy-to-cert
+  variables:
+    APP: auction
+    DOMINIO: landing.cert.deocasion.pe
+deploy-to-prod:
+  stage: deploy-to-prod
+  variables:
+    APP: auction
+    DOMINIO: deocasion.pe
